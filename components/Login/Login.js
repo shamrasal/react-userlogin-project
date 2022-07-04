@@ -9,13 +9,15 @@ const Login = (props) => {
   const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();
+  const [enteredCollegeName, setEnteredCollegeName] = useState('');
+  const [collegeNameIsValid, setCollegeNameIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
     setFormIsValid(
-      enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      enteredEmail.includes('@') && enteredCollegeName.trim().length > 0 && enteredPassword.trim().length > 6
     );
-  }, [enteredEmail, enteredPassword])
+  }, [enteredEmail, enteredPassword, enteredCollegeName])
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
@@ -25,12 +27,20 @@ const Login = (props) => {
     setEnteredPassword(event.target.value);
   };
 
+  const collegeNameChangeHandler = (event) => {
+    setEnteredCollegeName(event.target.value);
+  };
+
   const validateEmailHandler = () => {
     setEmailIsValid(enteredEmail.includes('@'));
   };
 
   const validatePasswordHandler = () => {
     setPasswordIsValid(enteredPassword.trim().length > 6);
+  };
+
+  const validateCollegeNameHandler = () => {
+    setCollegeNameIsValid(enteredCollegeName.trim().length > 0);
   };
 
   const submitHandler = (event) => {
@@ -65,6 +75,19 @@ const Login = (props) => {
             value={enteredPassword}
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
+          />
+        </div>
+        <div
+          className={`${classes.control} ${collegeNameIsValid === false ? classes.invalid : ''
+            }`}
+        >
+          <label htmlFor="collegeName">College Name</label>
+          <input
+            type="text"
+            id="collegeName"
+            value={enteredCollegeName}
+            onChange={collegeNameChangeHandler}
+            onBlur={validateCollegeNameHandler}
           />
         </div>
         <div className={classes.actions}>
